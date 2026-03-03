@@ -10,7 +10,6 @@ Built with pure HTML, CSS, and JavaScript.
 - Live pathfinding visualization
 - Performance metrics
 - True side-by-side comparison
-- Teacher/demo-ready explanation and UI
 
 ## Features
 - Click-to-build grid editor
