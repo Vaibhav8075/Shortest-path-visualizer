@@ -1,108 +1,15 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Can We Go Faster Than Dijkstra?</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="bg-shape bg-shape-a"></div>
-    <div class="bg-shape bg-shape-b"></div>
-
-    <main class="app-shell">
-        <header class="hero">
-            <p class="kicker">Interactive Web Application</p>
-            <h1>Can We Go Faster Than Dijkstra?</h1>
-            <p class="subtitle">A visual and practical comparison of <span class="accent-blue">Dijkstra</span> and <span class="accent-red">A*</span> search.</p>
-        </header>
-
-        <section class="panel controls-panel">
-            <div class="controls-grid">
-                <label>
-                    Algorithm
-                    <select id="algorithm">
-                        <option value="dijkstra">Dijkstra</option>
-                        <option value="astar">A*</option>
-                    </select>
-                </label>
-
-                <label>
-                    Speed
-                    <input id="speed" type="range" min="1" max="60" value="24">
-                    <span id="speedValue">24 ms / step</span>
-                </label>
-
-                <div class="buttons">
-                    <button id="runBtn" class="btn btn-primary">Run</button>
-                    <button id="compareBtn" class="btn btn-danger">Run Side-by-Side</button>
-                    <button id="mazeBtn" class="btn btn-muted">Random Maze</button>
-                    <button id="clearPathBtn" class="btn btn-muted">Clear Path</button>
-                    <button id="clearAllBtn" class="btn btn-muted">Reset Grid</button>
-                </div>
-            </div>
-        </section>
-
-        <section class="panel stats-panel">
-            <div class="metric">
-                <h3>Time</h3>
-                <p><span id="time">0.00</span> ms</p>
-            </div>
-            <div class="metric">
-                <h3>Visited Nodes</h3>
-                <p><span id="visited">0</span></p>
-            </div>
-            <div class="metric">
-                <h3>Path Length</h3>
-                <p><span id="pathLength">0</span></p>
-            </div>
-            <div class="metric">
-                <h3>Winner</h3>
-                <p id="winner">N/A</p>
-            </div>
-        </section>
-
-        <section class="panel grid-panel">
-            <h2 class="section-title">Editor Grid</h2>
-            <div class="legend">
-                <span><i class="dot start"></i> Start</span>
-                <span><i class="dot end"></i> End</span>
-                <span><i class="dot wall"></i> Wall</span>
-                <span><i class="dot visited"></i> Visited</span>
-                <span><i class="dot path"></i> Path</span>
-            </div>
-            <div id="grid"></div>
-        </section>
-
-        <section class="panel compare-panel">
-            <h2 class="section-title">Side-by-Side Live Comparison</h2>
-            <div class="compare-wrap">
-                <article class="compare-card">
-                    <h3 class="accent-blue">Dijkstra</h3>
-                    <p class="mini-metrics">Time: <span id="dTime">-</span> ms | Visited: <span id="dVisited">-</span> | Path: <span id="dPath">-</span></p>
-                    <div id="compareDGrid" class="mini-grid"></div>
-                </article>
-                <article class="compare-card">
-                    <h3 class="accent-red">A*</h3>
-                    <p class="mini-metrics">Time: <span id="aTime">-</span> ms | Visited: <span id="aVisited">-</span> | Path: <span id="aPath">-</span></p>
-                    <div id="compareAGrid" class="mini-grid"></div>
-                </article>
-            </div>
-        </section>
-
-        <section class="panel explanation-panel">
-            <h2>Explanation</h2>
-            <p><strong>Dijkstra explores uniformly</strong> in all directions and guarantees the shortest path in weighted/non-weighted positive graphs.</p>
-            <p><strong>A* explores strategically</strong> using an admissible heuristic (Manhattan distance here), so it usually visits fewer nodes and reaches the goal faster while still preserving optimality on this grid.</p>
-        </section>
-    </main>
-
-    <script src="utils/priorityQueue.js"></script>
-    <script src="algorithms/dijkstra.js"></script>
-    <script src="algorithms/astar.js"></script>
-    <script src="app.js"></script>
-</body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
