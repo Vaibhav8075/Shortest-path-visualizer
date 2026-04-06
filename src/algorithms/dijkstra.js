@@ -1,4 +1,4 @@
-﻿import { PriorityQueue } from "../utils/priorityQueue";
+import { PriorityQueue } from "../utils/priorityQueue";
 
 export function dijkstra(grid, start, end, getNeighbors) {
   const pq = new PriorityQueue();
@@ -19,7 +19,7 @@ export function dijkstra(grid, start, end, getNeighbors) {
     if (node === end) break;
 
     for (const neighbor of getNeighbors(grid, node)) {
-      const newDist = node.distance + 1;
+      const newDist = node.distance + neighbor.weight;
       if (newDist < neighbor.distance) {
         neighbor.distance = newDist;
         neighbor.previous = node;

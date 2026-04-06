@@ -1,4 +1,4 @@
-﻿import { ROWS, COLS, BENCHMARK_RUNS } from "../constants";
+import { ROWS, COLS, BENCHMARK_RUNS } from "../constants";
 import { dijkstra } from "../algorithms/dijkstra";
 import { astar } from "../algorithms/astar";
 
@@ -10,7 +10,8 @@ export function createCell(row, col) {
     isStart: false,
     isEnd: false,
     visited: false,
-    path: false
+    path: false,
+    weight: 1
   };
 }
 
@@ -46,6 +47,7 @@ export function createRunGrid(uiGrid) {
       row: cell.row,
       col: cell.col,
       isWall: cell.isWall,
+      weight: cell.weight,
       distance: Infinity,
       g: Infinity,
       f: Infinity,
@@ -72,37 +74,39 @@ export function findCoords(uiGrid) {
 export function pathFromEnd(endNode) {
   const coords = [];
   let length = 0;
+  let totalCost = 0;
   let current = endNode;
 
   while (current && current.previous) {
     length += 1;
-    current = current.previous;
+    totalCost += current.weight;
     coords.push([current.row, current.col]);
+    current = current.previous;
   }
 
-  return { coords: coords.reverse(), length };
+  return { coords: coords.reverse(), length, totalCost };
 }
 
-export function runAlgorithmOnGrid(type, runGrid, startCoord, endCoord) {
+export function runAlgorithmOnGrid(type, runGrid, startCoord, endCoord, options = {}) {
   const start = runGrid[startCoord.row][startCoord.col];
   const end = runGrid[endCoord.row][endCoord.col];
 
   const result =
     type === "dijkstra"
       ? dijkstra(runGrid, start, end, getNeighbors)
-      : astar(runGrid, start, end, getNeighbors);
+      : astar(runGrid, start, end, getNeighbors, options);
 
   const path = pathFromEnd(end);
-  return { ...result, pathCoords: path.coords, pathLength: path.length };
+  return { ...result, pathCoords: path.coords, pathLength: path.length, pathCost: path.totalCost };
 }
 
-export function benchmark(uiGrid, type, startCoord, endCoord) {
+export function benchmark(uiGrid, type, startCoord, endCoord, options = {}) {
   let total = 0;
 
   for (let i = 0; i < BENCHMARK_RUNS; i += 1) {
     const runGrid = createRunGrid(uiGrid);
     const t0 = performance.now();
-    runAlgorithmOnGrid(type, runGrid, startCoord, endCoord);
+    runAlgorithmOnGrid(type, runGrid, startCoord, endCoord, options);
     const t1 = performance.now();
     total += t1 - t0;
   }

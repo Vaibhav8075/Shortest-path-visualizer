@@ -1,13 +1,27 @@
-﻿import { PriorityQueue } from "../utils/priorityQueue";
+import { PriorityQueue } from "../utils/priorityQueue";
 
-function heuristic(a, b) {
-  return Math.abs(a.row - b.row) + Math.abs(a.col - b.col);
+function heuristicDistance(a, b, heuristicType) {
+  const dx = Math.abs(a.row - b.row);
+  const dy = Math.abs(a.col - b.col);
+
+  if (heuristicType === "euclidean") {
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  if (heuristicType === "octile") {
+    const diagonal = Math.min(dx, dy);
+    const straight = Math.max(dx, dy) - diagonal;
+    return diagonal * Math.SQRT2 + straight;
+  }
+
+  return dx + dy;
 }
 
-export function astar(grid, start, end, getNeighbors) {
+export function astar(grid, start, end, getNeighbors, options = {}) {
+  const heuristicType = options.heuristicType || "manhattan";
   const pq = new PriorityQueue();
   start.g = 0;
-  start.f = heuristic(start, end);
+  start.f = heuristicDistance(start, end, heuristicType);
   pq.enqueue(start, start.f);
 
   let visitedCount = 0;
@@ -24,10 +38,10 @@ export function astar(grid, start, end, getNeighbors) {
     if (node === end) break;
 
     for (const neighbor of getNeighbors(grid, node)) {
-      const g = node.g + 1;
+      const g = node.g + neighbor.weight;
       if (g < neighbor.g) {
         neighbor.g = g;
-        neighbor.f = g + heuristic(neighbor, end);
+        neighbor.f = g + heuristicDistance(neighbor, end, heuristicType);
         neighbor.previous = node;
         pq.enqueue(neighbor, neighbor.f);
       }
